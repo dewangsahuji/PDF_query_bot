@@ -1,6 +1,6 @@
-from connect import OPENAI_API_KEY
-from get_data import texts, tables, images
-from summaries import *
+from libs.connect import OPENAI_API_KEY
+from libs.get_data import texts, tables, images
+from libs.summaries import *
 import os
 
 import faiss

@@ -1,6 +1,6 @@
-from vector_store_and_retreiver import retriever2,vectorstore
-from image_function import display_base64_image
-from connect import OPENAI_API_KEY
+from libs.vector_store_and_retreiver import retriever2, vectorstore
+from libs.image_function import display_base64_image
+from libs.connect import OPENAI_API_KEY
 
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_core.messages import SystemMessage, HumanMessage

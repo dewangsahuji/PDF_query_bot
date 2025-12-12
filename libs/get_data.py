@@ -1,7 +1,13 @@
-# from Data import summaries
 from unstructured.documents.elements import Table, CompositeElement
 import json
 from unstructured.staging.base import dict_to_elements
+import os
+
+# Get the path to chunks.json 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+chunks_path = os.path.join(parent_dir, "chunks.json")
+
 
 # Load chunks.json
 with open("chunks.json", "r", encoding="utf-8") as f:
@@ -43,9 +49,12 @@ def get_tables(chunks):
                 if isinstance(el, Table):
                     tables.append(el)
     return tables
+
+
+#---------------------------------------------------------------------- 
 tables = get_tables(chunks)
 images = get_images_base64(chunks)
-
+#---------------------------------------------------------------------- 
 
 
 # print(len(texts))
