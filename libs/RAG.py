@@ -101,15 +101,15 @@ response = chain_with_sources.invoke(
     "What is Real Non-hydro GDP Growth?"
 )
 
-print("Response:", response['response'])
+# print("Response:", response['response'])
 
-print("\n\nContext:")
-for text in response['context']['texts']:
-    print(text.text)
-    print("Page number: ", text.metadata.page_number)
-    print("\n" + "-"*50 + "\n")
-for image in response['context']['images']:
-    display_base64_image(image)
+# print("\n\nContext:")
+# for text in response['context']['texts']:
+#     print(text.text)
+#     print("Page number: ", text.metadata.page_number)
+#     print("\n" + "-"*50 + "\n")
+# for image in response['context']['images']:
+#     display_base64_image(image)
 
 
 
