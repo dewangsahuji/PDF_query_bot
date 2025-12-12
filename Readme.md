@@ -30,7 +30,7 @@ Follow these steps to get the project running on your local machine.
 
 ### Prerequisites
 
-  * Python 3.9+
+  * Python 3.11+
   * An API Key for your chosen LLM (e.g., OpenAI API Key).
 
 ### Step 1: Clone the repository
