@@ -1,5 +1,5 @@
 # Core dependencies
-streamlit==1.51.0
+streamlit==1.39.0
 python-dotenv==1.0.0
 
 # LangChain
@@ -10,7 +10,7 @@ langchain-openai==1.1.1
 langchain-classic==1.0.0
 
 # OpenAI
-openai==2.8.0
+openai==1.54.3
 
 # Vector Store
 faiss-cpu==1.8.0
@@ -24,6 +24,5 @@ Pillow==10.4.0
 pdf2image==1.17.0
 
 # Additional dependencies for unstructured
-python-magic-bin==0.4.14  # For Windows
 pikepdf==9.4.2
 pypdf==5.1.0
