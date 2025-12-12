@@ -1,0 +1,9 @@
+hf_xet
+unstructured
+chromadb
+tiktoken
+langchain
+langchain-community
+langchain-openai
+langchain-groq
+python_dotenv
