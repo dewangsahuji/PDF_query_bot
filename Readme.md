@@ -1,9 +1,3 @@
-This is a template for your `README.md` based on the repository name (`PDF_query_bot`) and common file structure for such projects (Python, `app.py`, `requirements.txt`).
-
-Please review the sections, especially **Technologies Used** and **Installation**, and customize them if the specifics of your implementation (like the exact LLM, embedding model, or vector store used) are different from the assumptions made.
-
------
-
 # PDF Query Bot
 
 ## 🤖 Ask Me Anything: Your PDF Assistant
