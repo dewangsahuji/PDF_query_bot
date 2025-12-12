@@ -26,3 +26,5 @@ pdf2image==1.17.0
 # Additional dependencies for unstructured
 pikepdf==9.4.2
 pypdf==5.1.0
+
+ipython
