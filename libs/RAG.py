@@ -50,7 +50,7 @@ def build_prompt(kwargs):
 
     # construct prompt with context (including images)
     prompt_template = f"""
-    Answer the question based only on the following context, which can include text, tables, and the below image.
+    Accurately answer the question based only on the following context, which can include text, tables, and the below image.
     Context: {context_text}
     Question: {user_question}
     """
