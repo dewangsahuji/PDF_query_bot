@@ -10,7 +10,7 @@ langchain-openai==1.1.1
 langchain-classic==1.0.0
 
 # OpenAI
-openai==1.54.3
+openai==2.8.0
 
 # Vector Store
 faiss-cpu==1.8.0
