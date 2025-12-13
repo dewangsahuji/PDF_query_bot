@@ -29,16 +29,29 @@ store = InMemoryStore()
 id_key = "doc_id"
 
 def parse_docs(docs):
-    """Split base64-encoded images and texts"""
-    b64 = []
-    text = []
-    for doc in docs:
-        try:
-            b64decode(doc)
-            b64.append(doc)
-        except Exception as e:
-            text.append(doc)
-    return {"images": b64, "texts": text}
+    images = []
+    texts = []
+
+    for d in docs:
+        # Image/table element
+        if (
+            hasattr(d, "metadata")
+            and hasattr(d.metadata, "image_base64")
+            and d.metadata.image_base64  # ← THIS LINE FIXES IT
+        ):
+            images.append(d.metadata.image_base64)
+
+        # Text document
+        elif hasattr(d, "page_content"):
+            texts.append(d)
+        elif hasattr(d, "text"):
+            texts.append(d)
+
+    return {
+        "images": images,
+        "texts": texts
+    }
+
 
 
 def build_prompt(kwargs):
@@ -49,25 +62,32 @@ def build_prompt(kwargs):
     context_text = ""
     if len(docs_by_type["texts"]) > 0:
         for text_element in docs_by_type["texts"]:
-            context_text += text_element.text
+            context_text += text_element.text + "\n"
+
 
     # construct prompt with context (including images)
     prompt_template = f"""
-    Accurately answer the question based only on the following context with description of the context, which can include text, tables, and the below image.
+    Answer the question in pointers based only on the following context, which can include text, tables, and the below image.
     Context: {context_text}
     Question: {user_question}
     """
 
     prompt_content = [{"type": "text", "text": prompt_template}]
 
-    if len(docs_by_type["images"]) > 0:
-        for image in docs_by_type["images"]:
+    for image in docs_by_type.get("images", []):
+        try:
+            mime = detect_mime_type(image)
             prompt_content.append(
                 {
                     "type": "image_url",
-                    "image_url": {"url": f"data:image/jpeg;base64,{image}"},
+                    "image_url": {
+                        "url": f"data:{mime};base64,{image}"
+                    },
                 }
             )
+        except Exception:
+            # corrupted / unsupported img
+            continue
 
     return ChatPromptTemplate.from_messages(
         [
@@ -88,14 +108,6 @@ def cross_modal_rerank(query, docs):
             reranked.append(d)
 
     return reranked
-
-
-
-
-
-
-
-
 
 
 chain = (
@@ -121,8 +133,6 @@ chain_with_sources = {
         | StrOutputParser()
     )
 )
-
-
 
 
 # response = chain_with_sources.invoke(

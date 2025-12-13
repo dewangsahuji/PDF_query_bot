@@ -108,9 +108,9 @@ if prompt := st.chat_input("Ask a question about your document..."):
                 
                 # Display sources in expander
                 with st.expander("📄 View Sources"):
-                    st.write("DEBUG context keys:", context.keys())
-                    st.write("DEBUG num images:", len(context.get("Images", [])))
-                    st.write("DEBUG num texts:", len(context.get("texts", [])))
+                    # st.write("DEBUG context keys:", context.keys())
+                    # st.write("DEBUG num images:", len(context.get("images", [])))
+                    # st.write("DEBUG num texts:", len(context.get("texts", [])))
 
                     # Display text sources
                     if context["texts"]:
@@ -132,7 +132,10 @@ if prompt := st.chat_input("Ask a question about your document..."):
                                 try:
                                     img_data = base64.b64decode(img_b64)
                                     img = Image.open(BytesIO(img_data))
-                                    st.image(img, caption=f"Image {i+1}", use_container_width=True)
+                                    st.image(img,
+                                    caption=f"Image {i+1}",
+                                    use_container_width=True,
+                                    )
                                 except Exception as e:
                                     st.error(f"Error displaying image: {str(e)}")
                 
