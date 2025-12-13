@@ -30,4 +30,4 @@ pypdf==5.1.0
 ipython
 
 torch==2.9.1
-clip
+git+https://github.com/openai/CLIP.git
