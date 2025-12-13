@@ -52,6 +52,22 @@ def parse_docs(docs):
         "texts": texts
     }
 
+def detect_mime_type(base64_str):
+    """Detect MIME type from base64 string"""
+    try:
+        img_data = b64decode(base64_str)
+        if img_data.startswith(b'\xff\xd8\xff'):
+            return 'image/jpeg'
+        elif img_data.startswith(b'\x89PNG'):
+            return 'image/png'
+        elif img_data.startswith(b'GIF'):
+            return 'image/gif'
+        else:
+            return 'image/png'  # default
+    except:
+        return 'image/png'
+
+
 
 
 def build_prompt(kwargs):
@@ -62,7 +78,11 @@ def build_prompt(kwargs):
     context_text = ""
     if len(docs_by_type["texts"]) > 0:
         for text_element in docs_by_type["texts"]:
-            context_text += text_element.text + "\n"
+            # Handle both .text and .page_content attributes
+            if hasattr(text_element, 'text'):
+                context_text += text_element.text + "\n"
+            elif hasattr(text_element, 'page_content'):
+                context_text += text_element.page_content + "\n"
 
 
     # construct prompt with context (including images)
@@ -95,18 +115,57 @@ def build_prompt(kwargs):
         ]
     )
 
-# Execelence track
-def cross_modal_rerank(query, docs):
-    reranked = []
-    for d in docs:
-        # Case 1: LangChain Document with text
-        if hasattr(d, "page_content"):
-            reranked.append(d)
-
-        # Case 2: Unstructured element with image
-        elif hasattr(d, "metadata") and hasattr(d.metadata, "image_base64"):
-            reranked.append(d)
-
+## Excellence track
+def cross_modal_rerank(query, docs, top_k=5):
+    """
+    Rerank documents based on their relevance to the query using CLIP embeddings.
+    For images: use CLIP image-text similarity
+    For text: use CLIP text-text similarity for true cross-modal comparison
+    """
+    scored_docs = []
+    
+    for idx, d in enumerate(docs):
+        score = 0.0
+        
+        # Case 1: Document with image - use CLIP image-text similarity
+        if hasattr(d, "metadata") and hasattr(d.metadata, "image_base64") and d.metadata.image_base64:
+            try:
+                score = compute_image_similarity(query, d.metadata.image_base64)
+                # print(f"Image doc {idx}: CLIP score = {score:.4f}")
+            except Exception as e:
+                # print(f"Error computing image similarity: {e}")
+                score = 0.0
+        
+        # Case 2: Text document - use CLIP text-text similarity
+        elif hasattr(d, "page_content") or hasattr(d, "text"):
+            text_content = d.page_content if hasattr(d, "page_content") else d.text
+            
+            # Use CLIP for text similarity (cross-modal reranking)
+            try:
+                score = compute_text_similarity(query, text_content)
+                # print(f"Text doc {idx}: CLIP score = {score:.4f}")
+            except Exception as e:
+                # print(f"Error computing text similarity: {e}")
+                # Fallback: check if retriever provided a score
+                if hasattr(d, "metadata") and isinstance(d.metadata, dict) and "score" in d.metadata:
+                    score = d.metadata["score"]
+                else:
+                    # Default score based on retriever position
+                    score = 1.0 - (idx * 0.1)  # Decreasing score by position
+        
+        scored_docs.append((score, d))
+    
+    # Sort by score in descending order
+    scored_docs.sort(key=lambda x: x[0], reverse=True)
+    
+    # print(f"\n🔄 Reranked top {top_k} documents by relevance  ")
+    # for i, (score, doc) in enumerate(scored_docs[:top_k], 1):
+    #     doc_type = "image" if (hasattr(doc, "metadata") and hasattr(doc.metadata, "image_base64")) else "text"
+    #     print(f"  {i}. {doc_type.upper()} - score: {score:.4f}")
+    
+    # Return top_k documents
+    reranked = [doc for score, doc in scored_docs[:top_k]]
+    
     return reranked
 
 
