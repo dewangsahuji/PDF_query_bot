@@ -171,7 +171,4 @@ with st.sidebar:
     st.markdown("### 📝 Example Questions")
     st.markdown("""
     - What is Real Non-hydro GDP Growth?
-    - Summarize the key findings in the document
-    - What information is shown in the tables?
-    - Explain the trends shown in the images
     """)
