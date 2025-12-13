@@ -4,6 +4,9 @@
 
 The **PDF Query Bot** is a powerful application that allows you to chat with 2024 ARTICLE IV CONSULTATION—PRESS RELEASE STAFF REPORT AND STATEMENT BY THE EXECUTIVE DIRECTOR FOR QATAR. Get answers to your questions by advanced Retrieval-Augmented Generation (RAG) techniques.
 
+For more details, please refer to the [Multi-Modal Architecture](Multi_Modal_Archieture.md).
+
+
 ## ✨ Features
 
   * **Intelligent Q\&A:** Get accurate, context-aware answers to questions based *only* on the content of uploaded PDF.
@@ -88,20 +91,11 @@ The application will automatically open in your web browser (usually at `http://
 | :--- | :--- |
 | `app2.py` | The main Streamlit application file containing the user interface and core logic. |
 | `requirements.txt` | A list of all Python libraries needed for the project. |
-| `chunks.json` | (Likely) Stores pre-processed text chunks or metadata. |
-| `prototyp3.ipynb` | A Jupyter Notebook used for initial prototyping and testing of the LLM/RAG pipeline. |
+| `chunks.json` | Stores pre-processed text chunks of pdf. |
+| `prototyp3.ipynb` | A Jupyter Notebook used for initial preprocessing, prototyping and testing of the LLM/RAG pipeline. |
 | `Data/` | Directory for sample or pre-loaded PDF files. |
-| `libs/` | (Likely) Contains custom Python modules or utility functions. |
+| `libs/` | Contains custom Python modules or utility functions. |
 
-## 🤝 Contributing
-
-Contributions are welcome\! If you have suggestions for improvements, or find a bug, please feel free to:
-
-1.  Fork the repository.
-2.  Create a new branch (`git checkout -b feature/improvement`).
-3.  Commit your changes (`git commit -m 'feat: added a new feature'`).
-4.  Push to the branch (`git push origin feature/improvement`).
-5.  Open a Pull Request.
 
 ## 📜 License
 
