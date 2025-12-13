@@ -2,14 +2,14 @@
 
 ## 🤖 Ask Me Anything: Your PDF Assistant
 
-The **PDF Query Bot** is a powerful application that allows you to chat with your PDF documents. Upload a document, and instantly get answers to your questions, summarized content, or specific details extracted from the text, powered by Large Language Models (LLMs) and advanced Retrieval-Augmented Generation (RAG) techniques.
+The **PDF Query Bot** is a powerful application that allows you to chat with 2024 ARTICLE IV CONSULTATION—PRESS RELEASE STAFF REPORT AND STATEMENT BY THE EXECUTIVE DIRECTOR FOR QATAR. Get answers to your questions by advanced Retrieval-Augmented Generation (RAG) techniques.
 
 ## ✨ Features
 
-  * **Intelligent Q\&A:** Get accurate, context-aware answers to questions based *only* on the content of your uploaded PDF.
-  * **Multi-Page Support:** Process and query large, multi-page PDF documents effortlessly.
+  * **Intelligent Q\&A:** Get accurate, context-aware answers to questions based *only* on the content of uploaded PDF.
+  * **Multi-Page Support:** Process and query large, multi-page PDF document effortlessly.
   * **Context Preservation:** Utilizes vector stores to efficiently retrieve relevant text snippets, ensuring answers are precise and verifiable.
-  * **Simple Web Interface:** A user-friendly interface built with Streamlit for easy file uploading and interaction.
+  * **Simple Web Interface:** A user-friendly interface built with Streamlit for easy interaction.
 
 ## 🚀 Technologies Used
 
@@ -17,12 +17,12 @@ This project is built using Python and leverages several key libraries from the 
 
 | Component | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Interface** | `Streamlit` | Creates the interactive web application interface. |
+| **Interface** | `Streamlit` |UI|
 | **PDF Processing** | `Unstructured` | Handles reading and extracting text from PDF files. |
-| **Text Chunking** | `LangChain` | Splits large documents into manageable text chunks for indexing. |
-| **Embeddings** | `OpenAI Embeddings` (or local model) | Converts text chunks into numerical vector representations. |
-| **Vector Store** | `FAISS`, `ChromaDB`,  | Stores the text vectors for fast similarity search (retrieval). |
-| **Language Model** | `OpenAI GPT-4o-mini` ,`llama-3.1-8b-instant` | Generates the final, conversational answers. |
+| **Text Chunking** | `LangChain` |LLM handling and RAG  |
+| **Embeddings** | `OpenAI Embeddings` | Embeddings |
+| **Vector Store** | `FAISS`, `ChromaDB`,  | Retreivers |
+| **Language Model** | `OpenAI GPT-4o-mini` ,`llama-3.1-8b-instant` | Generate answers. |
 
 ## 🛠️ Installation and Setup
 
@@ -105,7 +105,6 @@ Contributions are welcome\! If you have suggestions for improvements, or find a 
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details. *(Note: You may need to add a `LICENSE` file to your repository.)*
 
 -----
 
