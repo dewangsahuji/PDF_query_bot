@@ -18,11 +18,11 @@ This project is built using Python and leverages several key libraries from the 
 | Component | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Interface** | `Streamlit` | Creates the interactive web application interface. |
-| **PDF Processing** | `PyPDF2` or similar | Handles reading and extracting text from PDF files. |
-| **Text Chunking** | `LangChain` or `LlamaIndex` | Splits large documents into manageable text chunks for indexing. |
+| **PDF Processing** | `Unstructured` | Handles reading and extracting text from PDF files. |
+| **Text Chunking** | `LangChain` | Splits large documents into manageable text chunks for indexing. |
 | **Embeddings** | `OpenAI Embeddings` (or local model) | Converts text chunks into numerical vector representations. |
-| **Vector Store** | `FAISS`, `ChromaDB`, or similar | Stores the text vectors for fast similarity search (retrieval). |
-| **Language Model** | `OpenAI GPT-3.5/4` (or other LLM) | Generates the final, conversational answers. |
+| **Vector Store** | `FAISS`, `ChromaDB`,  | Stores the text vectors for fast similarity search (retrieval). |
+| **Language Model** | `OpenAI GPT-4o-mini` ,`llama-3.1-8b-instant` | Generates the final, conversational answers. |
 
 ## 🛠️ Installation and Setup
 
@@ -31,7 +31,6 @@ Follow these steps to get the project running on your local machine.
 ### Prerequisites
 
   * Python 3.11+
-  * An API Key for your chosen LLM (e.g., OpenAI API Key).
 
 ### Step 1: Clone the repository
 
