@@ -108,6 +108,10 @@ if prompt := st.chat_input("Ask a question about your document..."):
                 
                 # Display sources in expander
                 with st.expander("📄 View Sources"):
+                    st.write("DEBUG context keys:", context.keys())
+                    st.write("DEBUG num images:", len(context.get("Images", [])))
+                    st.write("DEBUG num texts:", len(context.get("texts", [])))
+
                     # Display text sources
                     if context["texts"]:
                         st.subheader("Text Sources")

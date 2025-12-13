@@ -15,6 +15,9 @@ from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_classic.retrievers.multi_vector import MultiVectorRetriever
 
+## Execellence track
+from libs.cross_modal_reranker import compute_image_similarity
+
 
 
 import os
@@ -50,7 +53,7 @@ def build_prompt(kwargs):
 
     # construct prompt with context (including images)
     prompt_template = f"""
-    Accurately answer the question based only on the following context, which can include text, tables, and the below image.
+    Accurately answer the question based only on the following context with description of the context, which can include text, tables, and the below image.
     Context: {context_text}
     Question: {user_question}
     """
@@ -72,10 +75,34 @@ def build_prompt(kwargs):
         ]
     )
 
+# Execelence track
+def cross_modal_rerank(query, docs):
+    reranked = []
+    for d in docs:
+        # Case 1: LangChain Document with text
+        if hasattr(d, "page_content"):
+            reranked.append(d)
+
+        # Case 2: Unstructured element with image
+        elif hasattr(d, "metadata") and hasattr(d.metadata, "image_base64"):
+            reranked.append(d)
+
+    return reranked
+
+
+
+
+
+
+
+
+
 
 chain = (
     {
-        "context": retriever2 | RunnableLambda(parse_docs),
+        "context": RunnableLambda(
+            lambda q: cross_modal_rerank(q, retriever2.invoke(q))
+        ) | RunnableLambda(parse_docs),
         "question": RunnablePassthrough(),
     }
     | RunnableLambda(build_prompt)
@@ -84,7 +111,8 @@ chain = (
 )
 
 chain_with_sources = {
-    "context": retriever2 | RunnableLambda(parse_docs),
+    "context": RunnableLambda(
+        lambda q: cross_modal_rerank(q, retriever2.invoke(q))) | RunnableLambda(parse_docs),
     "question": RunnablePassthrough(),
 } | RunnablePassthrough().assign(
     response=(
@@ -97,9 +125,9 @@ chain_with_sources = {
 
 
 
-response = chain_with_sources.invoke(
-    "What is Real Non-hydro GDP Growth?"
-)
+# response = chain_with_sources.invoke(
+#     "What is Real Non-hydro GDP Growth?"
+# )
 
 # print("Response:", response['response'])
 
